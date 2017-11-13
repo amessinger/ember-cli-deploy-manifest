@@ -53,7 +53,7 @@ module.exports = {
             mappedFilesToInclude[getOriginalFilename(filename)] = filename;
           });
           var outputPath = path.join(distDir, manifestPath);
-          jsonfile.writeFileSync(outputPath, mappedFilesToInclude, {spaces: 2});
+          jsonfile.writeFileSync(outputPath, mappedFilesToInclude, { spaces: 2 });
           this.log('generated manifest including ' + filesToInclude.length + ' files ok', { verbose: true });
           return { manifestPath: manifestPath };
         } catch (error) {
