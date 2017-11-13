@@ -5,7 +5,7 @@ var RSVP      = require('rsvp');
 var fs        = require('fs');
 var path      = require('path');
 var minimatch = require('minimatch');
-var jsonfile = require('jsonfile');
+var jsonfile  = require('jsonfile');
 
 var DeployPluginBase = require('ember-cli-deploy-plugin');
 
