@@ -49,7 +49,7 @@ module.exports = {
           }
           filesToInclude.sort();
           var mappedFilesToInclude = {};
-          filesToInclude.map((filename)=> {
+          filesToInclude.forEach((filename)=> {
             mappedFilesToInclude[getOriginalFilename(filename)] = filename;
           });
           var outputPath = path.join(distDir, manifestPath);
