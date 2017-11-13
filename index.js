@@ -5,8 +5,14 @@ var RSVP      = require('rsvp');
 var fs        = require('fs');
 var path      = require('path');
 var minimatch = require('minimatch');
+var jsonfile = require('jsonfile');
 
 var DeployPluginBase = require('ember-cli-deploy-plugin');
+
+// removes the md5 hash from the filename
+function getOriginalFilename(filename) {
+  return filename.replace(/(-[a-f0-9]{32})(\..+)$/g, '$2');;
+}
 
 module.exports = {
   name: 'ember-cli-deploy-manifest',
@@ -17,7 +23,7 @@ module.exports = {
       defaultConfig: {
         filePattern: '**/*.{js,css,png,gif,ico,jpg,map,xml,txt,svg,swf,eot,ttf,woff,woff2}',
         fileIgnorePattern: null,
-        manifestPath: 'manifest.txt',
+        manifestPath: 'manifest.json',
         distDir: function(context) {
           return context.distDir;
         },
@@ -42,8 +48,12 @@ module.exports = {
             });
           }
           filesToInclude.sort();
+          var mappedFilesToInclude = {};
+          filesToInclude.map((filename)=> {
+            mappedFilesToInclude[getOriginalFilename(filename)] = filename;
+          });
           var outputPath = path.join(distDir, manifestPath);
-          fs.writeFileSync(outputPath, filesToInclude.join('\n'));
+          jsonfile.writeFileSync(outputPath, mappedFilesToInclude, {spaces: 2});
           this.log('generated manifest including ' + filesToInclude.length + ' files ok', { verbose: true });
           return { manifestPath: manifestPath };
         } catch (error) {
