@@ -11,7 +11,7 @@ var DeployPluginBase = require('ember-cli-deploy-plugin');
 
 // removes the md5 hash from the filename
 function getOriginalFilename(filename) {
-  return filename.replace(/(-[a-f0-9]{32})(\..+)$/g, '$2');;
+  return filename.replace(/(-[a-f0-9]{32})(\..+)$/g, '$2');
 }
 
 module.exports = {
